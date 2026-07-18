@@ -14,10 +14,16 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
+
+        {/* Página inicial */}
+        <Route path="/" element={<Navigate to="/login" />} />
+
+        {/* Rutas públicas */}
         <Route path="/login" element={<Login />} />
         <Route path="/inscripcion" element={<Inscripcion />} />
         <Route path="/consulta" element={<ConsultaInscripcion />} />
 
+        {/* Rutas protegidas */}
         <Route
           path="/dashboard"
           element={
@@ -26,6 +32,7 @@ export default function App() {
             </RutaProtegida>
           }
         />
+
         <Route
           path="/participantes"
           element={
@@ -35,7 +42,9 @@ export default function App() {
           }
         />
 
-        <Route path="*" element={<Navigate to="/inscripcion" />} />
+        {/* Cualquier ruta inexistente manda al login */}
+        <Route path="*" element={<Navigate to="/login" />} />
+
       </Routes>
     </BrowserRouter>
   );
