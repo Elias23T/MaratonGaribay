@@ -1,0 +1,247 @@
+* {
+  box-sizing: border-box;
+}
+
+.inscripcion-page {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 16px;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+.inscripcion-card {
+  width: 100%;
+  max-width: 560px;
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+  padding: 36px 34px;
+}
+
+.inscripcion-card h1 {
+  margin: 0 0 10px;
+  font-size: 26px;
+  font-weight: 800;
+  color: #1a1a2e;
+  text-align: center;
+}
+
+.inscripcion-card > p {
+  text-align: center;
+  font-size: 13.5px;
+  margin: 0 0 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #eef0f4;
+}
+
+.inscripcion-card > p a {
+  color: #e63946;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.inscripcion-card > p a:hover {
+  text-decoration: underline;
+}
+
+.participante-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px 16px;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+}
+
+.campo-ancho {
+  grid-column: 1 / -1;
+}
+
+.campo label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #374151;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  margin-bottom: 6px;
+}
+
+.campo input,
+.campo select {
+  padding: 12px 14px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 10px;
+  font-size: 15px;
+  color: #1f2937;
+  background: #f9fafb;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+.campo input:focus,
+.campo select:focus {
+  outline: none;
+  border-color: #e63946;
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(230, 57, 70, 0.12);
+}
+
+.campo select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b7280' stroke-width='2' fill='none' fill-rule='evenodd'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+}
+
+.form-error {
+  grid-column: 1 / -1;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+  padding: 11px 14px;
+  border-radius: 8px;
+  font-size: 13.5px;
+  text-align: center;
+}
+
+.form-botones {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.form-botones button[type='submit'] {
+  flex: 1;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffffff;
+  cursor: pointer;
+  background: linear-gradient(135deg, #ff6b6b, #e63946);
+  box-shadow: 0 8px 20px rgba(230, 57, 70, 0.3);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.form-botones button[type='submit']:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 26px rgba(230, 57, 70, 0.4);
+}
+
+.form-botones button[type='submit']:disabled {
+  background: #d1d5db;
+  box-shadow: none;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.form-botones button[type='button'] {
+  padding: 14px 24px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  background: #ffffff;
+  color: #374151;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.form-botones button[type='button']:hover {
+  background: #f3f4f6;
+}
+
+.mensaje-exito {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 10px 0 6px;
+  animation: aparecerExito 0.4s ease;
+}
+
+@keyframes aparecerExito {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.check-icono {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  background: #dcfce7;
+  color: #16a34a;
+  font-size: 32px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mensaje-exito-texto {
+  font-size: 18px;
+  font-weight: 700;
+  color: #16a34a;
+  margin: 0 0 18px;
+}
+
+.numero-corredor-label {
+  font-size: 12.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #9ca3af;
+  margin: 0;
+}
+
+.numero-corredor {
+  font-size: 36px;
+  font-weight: 800;
+  color: #e63946;
+  letter-spacing: 1px;
+  margin: 4px 0 22px;
+}
+
+.btn-nueva-inscripcion {
+  padding: 12px 22px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  background: #f9fafb;
+  color: #374151;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn-nueva-inscripcion:hover {
+  background: #f3f4f6;
+}
+
+@media (max-width: 480px) {
+  .inscripcion-card {
+    padding: 28px 22px;
+  }
+
+  .participante-form {
+    grid-template-columns: 1fr;
+  }
+
+  .campo-ancho {
+    grid-column: 1;
+  }
+}

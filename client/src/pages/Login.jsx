@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import authService from '../services/authService';
+import '../styles/login.css';
 
 export default function Login() {
   const [correo, setCorreo] = useState('');

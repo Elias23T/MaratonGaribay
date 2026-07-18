@@ -8,6 +8,8 @@ import Loading from '../components/Loading';
 import participantesService from '../services/participantesService';
 import { exportarParticipantesPDF } from '../utils/exportPDF';
 import { exportarParticipantesExcel } from '../utils/exportExcel';
+import '../styles/dashboard.css';
+import '../styles/participantes.css';
 
 export default function Participantes() {
   const [participantes, setParticipantes] = useState([]);
@@ -77,33 +79,57 @@ export default function Participantes() {
       <Sidebar />
       <div className="contenido">
         <Navbar />
-        <h1>Participantes</h1>
-        {error && <p className="form-error">{error}</p>}
+        <div className="participantes-body">
+          <div className="participantes-header">
+            <div>
+              <h1>Participantes</h1>
+              <p className="dashboard-subtitulo">{participantes.length} registrados</p>
+            </div>
+            <button className="btn-nuevo" onClick={handleNuevo}>+ Nuevo participante</button>
+          </div>
 
-        <div className="acciones-superiores">
-          <SearchBar onBuscar={handleBuscar} onLimpiar={cargarParticipantes} />
-          <button onClick={handleNuevo}>Nuevo participante</button>
-          <button onClick={() => exportarParticipantesPDF(participantes)}>Exportar PDF</button>
-          <button onClick={() => exportarParticipantesExcel(participantes)}>Exportar Excel</button>
+          {error && <p className="form-error">{error}</p>}
+
+          <div className="participantes-toolbar">
+            <SearchBar onBuscar={handleBuscar} onLimpiar={cargarParticipantes} />
+            <div className="toolbar-exportar">
+              <button className="btn-exportar btn-pdf" onClick={() => exportarParticipantesPDF(participantes)}>
+                Exportar PDF
+              </button>
+              <button className="btn-exportar btn-excel" onClick={() => exportarParticipantesExcel(participantes)}>
+                Exportar Excel
+              </button>
+            </div>
+          </div>
+
+          {mostrarForm && (
+            <div className="modal-overlay" onClick={() => setMostrarForm(false)}>
+              <div className="modal-contenido" onClick={(e) => e.stopPropagation()}>
+                <div className="modal-header">
+                  <h2>{participanteEditar ? 'Editar participante' : 'Nuevo participante'}</h2>
+                  <button className="modal-cerrar" onClick={() => setMostrarForm(false)}>✕</button>
+                </div>
+                <ParticipanteForm
+                  participante={participanteEditar}
+                  onGuardar={handleGuardar}
+                  onCancelar={() => setMostrarForm(false)}
+                />
+              </div>
+            </div>
+          )}
+
+          <div className="tabla-contenedor">
+            {cargando ? (
+              <Loading />
+            ) : (
+              <ParticipantesTable
+                participantes={participantes}
+                onEditar={handleEditar}
+                onEliminar={handleEliminar}
+              />
+            )}
+          </div>
         </div>
-
-        {mostrarForm && (
-          <ParticipanteForm
-            participante={participanteEditar}
-            onGuardar={handleGuardar}
-            onCancelar={() => setMostrarForm(false)}
-          />
-        )}
-
-        {cargando ? (
-          <Loading />
-        ) : (
-          <ParticipantesTable
-            participantes={participantes}
-            onEditar={handleEditar}
-            onEliminar={handleEliminar}
-          />
-        )}
       </div>
     </div>
   );

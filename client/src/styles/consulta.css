@@ -1,0 +1,253 @@
+* {
+    box-sizing: border-box;
+  }
+  
+  .consulta-page {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 16px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  }
+  
+  .consulta-card {
+    width: 100%;
+    max-width: 480px;
+    background: #ffffff;
+    border-radius: 18px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+    padding: 36px 34px;
+  }
+  
+  .consulta-card h1 {
+    margin: 0 0 10px;
+    font-size: 26px;
+    font-weight: 800;
+    color: #1a1a2e;
+    text-align: center;
+  }
+  
+  .consulta-volver {
+    text-align: center;
+    margin: 0 0 24px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eef0f4;
+  }
+  
+  .consulta-volver a {
+    color: #e63946;
+    font-weight: 600;
+    font-size: 13.5px;
+    text-decoration: none;
+  }
+  
+  .consulta-volver a:hover {
+    text-decoration: underline;
+  }
+  
+  .consulta-form label {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    color: #374151;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    margin-bottom: 8px;
+  }
+  
+  .consulta-input-grupo {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .consulta-input-grupo input {
+    flex: 1;
+    padding: 13px 14px;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 15px;
+    color: #1f2937;
+    background: #f9fafb;
+    transition: all 0.2s ease;
+  }
+  
+  .consulta-input-grupo input:focus {
+    outline: none;
+    border-color: #e63946;
+    background: #ffffff;
+    box-shadow: 0 0 0 4px rgba(230, 57, 70, 0.12);
+  }
+  
+  .consulta-input-grupo button {
+    padding: 13px 22px;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    color: #ffffff;
+    cursor: pointer;
+    background: linear-gradient(135deg, #ff6b6b, #e63946);
+    box-shadow: 0 8px 20px rgba(230, 57, 70, 0.3);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    white-space: nowrap;
+  }
+  
+  .consulta-input-grupo button:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 26px rgba(230, 57, 70, 0.4);
+  }
+  
+  .consulta-input-grupo button:disabled {
+    background: #d1d5db;
+    box-shadow: none;
+    cursor: not-allowed;
+    transform: none;
+  }
+  
+  .form-error {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #dc2626;
+    padding: 11px 14px;
+    border-radius: 8px;
+    font-size: 13.5px;
+    text-align: center;
+    margin-top: 16px;
+  }
+  
+  .resultado-inscrito {
+    text-align: center;
+    margin-top: 26px;
+    padding-top: 26px;
+    border-top: 1px solid #eef0f4;
+    animation: aparecerResultado 0.4s ease;
+  }
+  
+  @keyframes aparecerResultado {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .check-icono {
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 14px;
+    border-radius: 50%;
+    background: #dcfce7;
+    color: #16a34a;
+    font-size: 28px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .resultado-titulo {
+    font-size: 17px;
+    font-weight: 700;
+    color: #16a34a;
+    margin: 0 0 20px;
+  }
+  
+  .resultado-datos {
+    background: #f9fafb;
+    border-radius: 12px;
+    padding: 8px 18px;
+    text-align: left;
+  }
+  
+  .dato-fila {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #eef0f4;
+  }
+  
+  .dato-fila:last-child {
+    border-bottom: none;
+  }
+  
+  .dato-label {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+  
+  .dato-valor {
+    font-size: 14.5px;
+    font-weight: 600;
+    color: #1f2937;
+  }
+  
+  .dato-valor.destacado {
+    font-size: 18px;
+    font-weight: 800;
+    color: #e63946;
+  }
+  
+  .resultado-no-encontrado {
+    text-align: center;
+    margin-top: 26px;
+    padding-top: 26px;
+    border-top: 1px solid #eef0f4;
+    animation: aparecerResultado 0.4s ease;
+  }
+  
+  .x-icono {
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 14px;
+    border-radius: 50%;
+    background: #fef2f2;
+    color: #dc2626;
+    font-size: 26px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .resultado-no-encontrado p {
+    color: #374151;
+    font-size: 14.5px;
+    margin: 0 0 18px;
+  }
+  
+  .btn-ir-inscripcion {
+    display: inline-block;
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #ffffff;
+    text-decoration: none;
+    background: linear-gradient(135deg, #ff6b6b, #e63946);
+    box-shadow: 0 8px 20px rgba(230, 57, 70, 0.3);
+    transition: transform 0.15s ease;
+  }
+  
+  .btn-ir-inscripcion:hover {
+    transform: translateY(-2px);
+  }
+  
+  @media (max-width: 480px) {
+    .consulta-card {
+      padding: 28px 22px;
+    }
+  
+    .consulta-input-grupo {
+      flex-direction: column;
+    }
+  }
