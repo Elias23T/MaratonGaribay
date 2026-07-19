@@ -34,7 +34,6 @@ async function generarNumeroCorredor(categoria) {
 
 async function crearParticipante(datos) {
   const {
-    categoria,
     nombre_completo,
     ci,
     fecha_nacimiento,
@@ -44,20 +43,21 @@ async function crearParticipante(datos) {
     ci_tutor,
   } = datos;
 
-  if (!categoria || !nombre_completo || !ci || !fecha_nacimiento || !celular || !barrio) {
+  if (!nombre_completo || !ci || !fecha_nacimiento || !celular || !barrio) {
     throw new Error('Faltan campos obligatorios');
   }
 
-  const categoriaNormalizada = String(categoria).trim().toUpperCase();
+  // Normaliza el CI para evitar duplicados por espacios en blanco
+  const ciNormalizado = String(ci).trim();
 
-  if (categoriaNormalizada !== 'A' && categoriaNormalizada !== 'B') {
-    throw new Error('La categoría debe ser A o B');
+  if (!ciNormalizado) {
+    throw new Error('El CI no puede estar vacío');
   }
 
   const { data: existente } = await supabase
     .from('participantes')
     .select('id')
-    .eq('ci', ci)
+    .eq('ci', ciNormalizado)
     .maybeSingle();
 
   if (existente) {
@@ -67,19 +67,22 @@ async function crearParticipante(datos) {
   const edad = calcularEdad(fecha_nacimiento);
   const es_menor = edad < 18;
 
+  // Categoría automática: A = menor de edad, B = mayor de edad
+  const categoriaAutomatica = es_menor ? 'A' : 'B';
+
   if (es_menor && (!nombre_tutor || !ci_tutor)) {
     throw new Error('Los participantes menores de edad requieren nombre y CI del tutor');
   }
 
-  const numero_corredor = await generarNumeroCorredor(categoriaNormalizada);
+  const numero_corredor = await generarNumeroCorredor(categoriaAutomatica);
 
   const { data, error } = await supabase
     .from('participantes')
     .insert([{
       numero_corredor,
-      categoria: categoriaNormalizada,
+      categoria: categoriaAutomatica,
       nombre_completo,
-      ci,
+      ci: ciNormalizado,
       fecha_nacimiento,
       edad,
       celular,
@@ -129,7 +132,7 @@ async function obtenerParticipantePorId(id) {
 
 async function actualizarParticipante(id, datos) {
   const camposPermitidos = [
-    'categoria', 'nombre_completo', 'ci', 'fecha_nacimiento',
+    'nombre_completo', 'ci', 'fecha_nacimiento',
     'celular', 'barrio', 'nombre_tutor', 'ci_tutor',
   ];
 
@@ -138,17 +141,29 @@ async function actualizarParticipante(id, datos) {
     if (datos[campo] !== undefined) actualizacion[campo] = datos[campo];
   }
 
-  if (actualizacion.categoria) {
-    const categoriaNormalizada = String(actualizacion.categoria).trim().toUpperCase();
-    if (categoriaNormalizada !== 'A' && categoriaNormalizada !== 'B') {
-      throw new Error('La categoría debe ser A o B');
+  // Normaliza el CI si viene en la actualización, y valida que no choque con otro participante
+  if (actualizacion.ci) {
+    const ciNormalizado = String(actualizacion.ci).trim();
+
+    const { data: existente } = await supabase
+      .from('participantes')
+      .select('id')
+      .eq('ci', ciNormalizado)
+      .neq('id', id)
+      .maybeSingle();
+
+    if (existente) {
+      throw new Error('Ya existe otro participante registrado con ese CI');
     }
-    actualizacion.categoria = categoriaNormalizada;
+
+    actualizacion.ci = ciNormalizado;
   }
 
+  // Si cambia la fecha de nacimiento, recalcula edad y categoría automáticamente
   if (actualizacion.fecha_nacimiento) {
     actualizacion.edad = calcularEdad(actualizacion.fecha_nacimiento);
     actualizacion.es_menor = actualizacion.edad < 18;
+    actualizacion.categoria = actualizacion.es_menor ? 'A' : 'B';
   }
 
   const { data, error } = await supabase
@@ -185,11 +200,14 @@ async function buscarParticipantes(termino) {
 
   return data;
 }
+
 async function buscarPorCI(ci) {
+  const ciNormalizado = String(ci).trim();
+
   const { data, error } = await supabase
     .from('participantes')
     .select('numero_corredor, categoria, nombre_completo, ci, edad, barrio, fecha_registro')
-    .eq('ci', ci)
+    .eq('ci', ciNormalizado)
     .maybeSingle();
 
   if (error) throw new Error(error.message);
