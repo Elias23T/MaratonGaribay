@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { esMenorDeEdad } from '../utils/calcularEdad';
 
 const valoresIniciales = {
-  categoria: '',
   nombre_completo: '',
   ci: '',
   fecha_nacimiento: '',
@@ -25,6 +24,7 @@ export default function ParticipanteForm({ participante, onGuardar, onCancelar, 
   }, [participante]);
 
   const esMenor = esMenorDeEdad(form.fecha_nacimiento);
+  const categoriaCalculada = form.fecha_nacimiento ? (esMenor ? 'A' : 'B') : '';
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -35,7 +35,7 @@ export default function ParticipanteForm({ participante, onGuardar, onCancelar, 
     e.preventDefault();
     setError('');
 
-    if (!form.categoria || !form.nombre_completo || !form.ci || !form.fecha_nacimiento || !form.celular || !form.barrio) {
+    if (!form.nombre_completo || !form.ci || !form.fecha_nacimiento || !form.celular || !form.barrio) {
       setError('Todos los campos son obligatorios');
       return;
     }
@@ -51,15 +51,6 @@ export default function ParticipanteForm({ participante, onGuardar, onCancelar, 
   return (
     <form onSubmit={handleSubmit} className="participante-form">
       {error && <p className="form-error">{error}</p>}
-
-      <div className="campo">
-        <label>Categoría</label>
-        <select name="categoria" value={form.categoria} onChange={handleChange}>
-          <option value="">Seleccione categoría</option>
-          <option value="A">A</option>
-          <option value="B">B</option>
-        </select>
-      </div>
 
       <div className="campo campo-ancho">
         <label>Nombre completo</label>
@@ -79,6 +70,19 @@ export default function ParticipanteForm({ participante, onGuardar, onCancelar, 
       <div className="campo">
         <label>Celular</label>
         <input name="celular" value={form.celular} onChange={handleChange} />
+      </div>
+
+      <div className="campo">
+        <label>Categoría (automática)</label>
+        <input
+          value={
+            categoriaCalculada
+              ? `${categoriaCalculada} — ${esMenor ? 'Menor de edad' : 'Mayor de edad'}`
+              : 'Ingresa la fecha de nacimiento'
+          }
+          readOnly
+          className="campo-calculado"
+        />
       </div>
 
       <div className="campo campo-ancho">

@@ -1,180 +1,273 @@
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+.login-scroll-container {
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
+  height: 100vh;
+  width: 100%;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+
+  /* Fondo fijo: la imagen no se mueve, solo el contenido se desliza encima */
+  background-image:
+    linear-gradient(135deg, rgba(15, 15, 30, 0.65), rgba(230, 57, 70, 0.45)),
+    url('/garibaylogo.jpeg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* SECCIÓN 1 - LOGIN (transparente, deja ver el fondo fijo) */
+.seccion-login {
+  scroll-snap-align: start;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 20px;
+}
+
+.login-form {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 18px;
+  padding: 44px 38px;
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+  animation: aparecer 0.5s ease;
+}
+
+@keyframes aparecer {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.login-form h2 {
+  text-align: center;
+  margin: 0 0 28px;
+  color: #ffffff;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.login-form label {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 16px;
+  margin-bottom: 6px;
+}
+
+.login-form input {
+  padding: 13px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  font-size: 15px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  transition: all 0.25s ease;
+}
+
+.login-form input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.login-form input:focus {
+  outline: none;
+  border-color: #ff6b6b;
+  background: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 0 0 4px rgba(255, 107, 107, 0.2);
+}
+
+.login-form button[type='submit'] {
+  margin-top: 28px;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffffff;
+  cursor: pointer;
+  background: linear-gradient(135deg, #ff6b6b, #e63946);
+  box-shadow: 0 8px 20px rgba(230, 57, 70, 0.35);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.login-form button[type='submit']:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 26px rgba(230, 57, 70, 0.45);
+}
+
+.login-form button[type='submit']:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.login-form button[type='submit']:disabled {
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.form-error {
+  background: rgba(255, 82, 82, 0.15);
+  border: 1px solid rgba(255, 82, 82, 0.4);
+  color: #ffd6d6;
+  padding: 11px 14px;
+  border-radius: 8px;
+  font-size: 13.5px;
+  margin-bottom: 4px;
+  text-align: center;
+}
+
+/* Indicador de scroll */
+.scroll-indicador {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+.flecha-abajo {
+  font-size: 20px;
+  animation: rebote 1.6s ease-in-out infinite;
+}
+
+@keyframes rebote {
+  0%, 100% { transform: translateY(0); opacity: 0.6; }
+  50% { transform: translateY(8px); opacity: 1; }
+}
+
+/* SECCIÓN 2 - REGISTRO (overlay más oscuro para legibilidad, pero deja ver el fondo fijo) */
+.seccion-registro {
+  scroll-snap-align: start;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 20px;
+  background: rgba(10, 10, 20, 0.55);
+}
+
+.registro-contenido {
+  width: 100%;
+  max-width: 520px;
+  text-align: center;
+}
+
+.registro-contenido h2 {
+  color: #ffffff;
+  font-size: 30px;
+  font-weight: 800;
+  margin: 0 0 10px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.registro-contenido > p {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 15px;
+  margin: 0 0 36px;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+.registro-opciones {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.opcion-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 28px 24px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.opcion-card:hover {
+  background: rgba(255, 255, 255, 0.18);
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.opcion-principal {
+  background: rgba(230, 57, 70, 0.3);
+  border-color: rgba(230, 57, 70, 0.6);
+}
+
+.opcion-principal:hover {
+  background: rgba(230, 57, 70, 0.42);
+}
+
+.opcion-icono {
+  font-size: 32px;
+  margin-bottom: 12px;
+}
+
+.opcion-titulo {
+  font-size: 17px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 6px;
+}
+
+.opcion-desc {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+@media (max-width: 480px) {
+  .login-scroll-container {
+    background-attachment: scroll;
   }
-  
-  .login-page {
-    min-height: 100vh;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    position: relative;
-    background-image:
-      linear-gradient(135deg, rgba(15, 15, 30, 0.75), rgba(230, 57, 70, 0.55)),
-      url('/garibaylogo.jpeg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-  }
-  
+
   .login-form {
-    background: rgba(255, 255, 255, 0.12);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    border-radius: 18px;
-    padding: 44px 38px;
-    width: 100%;
-    max-width: 400px;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
-    animation: aparecer 0.5s ease;
+    padding: 32px 26px;
   }
-  
-  @keyframes aparecer {
-    from {
-      opacity: 0;
-      transform: translateY(16px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
+
   .login-form h2 {
-    text-align: center;
-    margin: 0 0 28px;
-    color: #ffffff;
-    font-size: 28px;
-    font-weight: 700;
-    letter-spacing: -0.5px;
+    font-size: 24px;
   }
-  
-  .login-form label {
-    font-size: 13px;
-    color: rgba(255, 255, 255, 0.85);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-top: 16px;
-    margin-bottom: 6px;
+
+  .registro-contenido h2 {
+    font-size: 24px;
   }
-  
-  .login-form input {
-    padding: 13px 16px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 10px;
-    font-size: 15px;
-    background: rgba(255, 255, 255, 0.1);
-    color: #ffffff;
-    transition: all 0.25s ease;
+
+  .opcion-card {
+    padding: 22px 18px;
   }
-  
-  .login-form input::placeholder {
-    color: rgba(255, 255, 255, 0.5);
-  }
-  
-  .login-form input:focus {
-    outline: none;
-    border-color: #ff6b6b;
-    background: rgba(255, 255, 255, 0.18);
-    box-shadow: 0 0 0 4px rgba(255, 107, 107, 0.2);
-  }
-  
-  .login-form button[type='submit'] {
-    margin-top: 28px;
-    padding: 14px;
-    border: none;
-    border-radius: 10px;
-    font-size: 16px;
-    font-weight: 700;
-    color: #ffffff;
-    cursor: pointer;
-    background: linear-gradient(135deg, #ff6b6b, #e63946);
-    box-shadow: 0 8px 20px rgba(230, 57, 70, 0.35);
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
-  }
-  
-  .login-form button[type='submit']:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 26px rgba(230, 57, 70, 0.45);
-  }
-  
-  .login-form button[type='submit']:active:not(:disabled) {
-    transform: translateY(0);
-  }
-  
-  .login-form button[type='submit']:disabled {
-    background: rgba(255, 255, 255, 0.25);
-    box-shadow: none;
-    cursor: not-allowed;
-  }
-  
-  .form-error {
-    background: rgba(255, 82, 82, 0.15);
-    border: 1px solid rgba(255, 82, 82, 0.4);
-    color: #ffd6d6;
-    padding: 11px 14px;
-    border-radius: 8px;
-    font-size: 13.5px;
-    margin-bottom: 4px;
-    text-align: center;
-  }
-  
-  .login-links {
-    margin-top: 26px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 14px;
-  }
-  
-  .login-links button {
-    width: 100%;
-    padding: 13px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.35);
-    color: #ffffff;
-    border-radius: 10px;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s ease, transform 0.15s ease;
-  }
-  
-  .login-links button:hover {
-    background: rgba(255, 255, 255, 0.22);
-    transform: translateY(-1px);
-  }
-  
-  .login-links p {
-    margin: 0;
-  }
-  
-  .login-links a {
-    color: rgba(255, 255, 255, 0.85);
-    font-size: 13.5px;
-    text-decoration: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
-    padding-bottom: 1px;
-    transition: color 0.2s ease;
-  }
-  
-  .login-links a:hover {
-    color: #ffffff;
-    border-color: #ffffff;
-  }
-  
-  @media (max-width: 480px) {
-    .login-form {
-      padding: 32px 26px;
-    }
-  
-    .login-form h2 {
-      font-size: 24px;
-    }
-  }
+}

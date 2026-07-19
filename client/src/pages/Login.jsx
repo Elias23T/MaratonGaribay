@@ -25,25 +25,48 @@ export default function Login() {
   }
 
   return (
-    <div className="login-page">
-      <form onSubmit={handleSubmit} className="login-form">
-        <h2>Iniciar sesión</h2>
-        {error && <p className="form-error">{error}</p>}
-        <label>Correo</label>
-        <input type="email" value={correo} onChange={(e) => setCorreo(e.target.value)} />
-        <label>Contraseña</label>
-        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-        <button type="submit" disabled={cargando}>
-          {cargando ? 'Ingresando...' : 'Ingresar'}
-        </button>
-      </form>
+    <div className="login-scroll-container">
 
-      <div className="login-links">
-        <Link to="/inscripcion">
-          <button type="button">Inscribirse a la carrera</button>
-        </Link>
-        <p><Link to="/consulta">¿Ya te inscribiste? Consulta aquí</Link></p>
-      </div>
+      <section className="seccion-login">
+        <form onSubmit={handleSubmit} className="login-form">
+          <h2>Iniciar sesión</h2>
+          {error && <p className="form-error">{error}</p>}
+          <label>Correo</label>
+          <input type="email" value={correo} onChange={(e) => setCorreo(e.target.value)} />
+          <label>Contraseña</label>
+          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          <button type="submit" disabled={cargando}>
+            {cargando ? 'Ingresando...' : 'Ingresar'}
+          </button>
+        </form>
+
+        <div className="scroll-indicador">
+          <span>Desliza para inscribirte</span>
+          <div className="flecha-abajo">↓</div>
+        </div>
+      </section>
+
+      <section className="seccion-registro">
+        <div className="registro-contenido">
+          <h2>¿Aún no estás inscrito?</h2>
+          <p>Regístrate en segundos y asegura tu cupo en la carrera</p>
+
+          <div className="registro-opciones">
+            <Link to="/inscripcion" className="opcion-card opcion-principal">
+              <span className="opcion-icono">📝</span>
+              <span className="opcion-titulo">Inscribirme a la carrera</span>
+              <span className="opcion-desc">Completa tus datos y obtén tu número de corredor</span>
+            </Link>
+
+            <Link to="/consulta" className="opcion-card">
+              <span className="opcion-icono">🔍</span>
+              <span className="opcion-titulo">Consultar mi inscripción</span>
+              <span className="opcion-desc">Busca tu registro con tu número de carnet</span>
+            </Link>
+          </div>
+        </div>
+      </section>
+
     </div>
   );
 }
